@@ -1,4 +1,5 @@
 let preprocessor = "sass";
+
 const { src, dest, parallel, series, watch } = require("gulp");
 const browserSync = require("browser-sync").create();
 const concat = require("gulp-concat");
@@ -44,12 +45,12 @@ function styles() {
 
 async function images() {
   imagecomp(
-    "src/images/src/**/*",
+    "src/images/src/**/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}",
     "src/images/dest/",
     { compress_force: false, statistic: true, autoupdate: true },
     false,
-    { jpg: { engine: "mozjpeg", command: ["-quality", "75"] } },
-    { png: { engine: "pngquant", command: ["--quality=75-100", "-o"] } },
+    { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
+    { png: { engine: "pngquant", command: ["--quality=20-50", "-o"] } },
     { svg: { engine: "svgo", command: "--multipass" } },
     {
       gif: { engine: "gifsicle", command: ["--colors", "64", "--use-col=web"] },
@@ -97,4 +98,4 @@ exports.cleanimg = cleanimg;
 exports.cleandist = cleandist;
 
 exports.default = parallel(styles, scripts, browsersync, startWatch);
-exports.build = series(cleandist, styles, scripts, buildcopy); //images
+exports.build = series(cleandist, styles, scripts, images, buildcopy);
