@@ -46,7 +46,7 @@ function styles() {
 async function images() {
   imagecomp(
     "src/images/src/**/*.{jpg,JPG,jpeg,JPEG,png,svg,gif}",
-    "src/images/dest/",
+    "dist/images/src/",
     { compress_force: false, statistic: true, autoupdate: true },
     false,
     { jpg: { engine: "mozjpeg", command: ["-quality", "60"] } },
@@ -86,15 +86,10 @@ function cleandist() {
   return del("dist/**/*", { force: true });
 }
 
-function cleanimg() {
-  return del("src/images/dest/**/*", { force: true });
-}
-
 exports.browsersync = browsersync;
 exports.scripts = scripts;
 exports.styles = styles;
 exports.images = images;
-exports.cleanimg = cleanimg;
 exports.cleandist = cleandist;
 
 exports.default = parallel(styles, scripts, browsersync, startWatch);
