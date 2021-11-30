@@ -61,14 +61,11 @@ async function images() {
     }
   );
 }
-function cleanimg() {
-  return del("src/images/dest/**/*", { force: true });
-}
 
 function startWatch() {
   watch(["src/**/*.js", "!src/**/*.min.js"], scripts);
   watch("src/**/" + preprocessor + "/**/*", styles);
-  watch("src/**/*.html").on("change", browserSync.reload);
+  watch("src/*.html").on("change", browserSync.reload);
   watch("src/images/src/**/*", images);
 }
 
@@ -86,6 +83,10 @@ function buildcopy() {
 
 function cleandist() {
   return del("dist/**/*", { force: true });
+}
+
+function cleanimg() {
+  return del("src/images/dest/**/*", { force: true });
 }
 
 exports.browsersync = browsersync;
